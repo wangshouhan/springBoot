@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>spring-boot框架测试页面</title>
+    <style type="text/css">
+        body {
+            padding-top: 50px;
+        }
+
+        .starter-template {
+            padding: 40px 15px;
+            text-align: center;
+        }
+        label{
+            width:100px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="starter-template">
+        <h2>使用账号密码登录</h2>
+        <form class="form-signin" role="form" name="form" action="/user/login"  method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <div class="form-group" style="margin-top:20px">
+                <label >账号</label>&nbsp;
+                <input type="text" class="form-control" name="username" value="" placeholder="账号"/>
+            </div>
+            <div class="form-group">
+                <label >密码</label>&nbsp;
+                <input type="password" class="form-control" name="password" placeholder="密码"/>
+            </div>
+            <div th:if="${session.SPRING_SECURITY_LAST_EXCEPTION!=null}" class="form-group">
+                <div style="color: red;font-size:10px;margin-left:-25px">用户名或者密码错误</div>
+            </div>
+
+            <input type="submit" id="login" value="登录" style="width:100px;background-color: aqua;border-color: aqua;margin-left:-33px;margin-top: 5px"/>
+
+            <!--<div th:if="${session.SPRING_SECURITY_LAST_EXCEPTION!=null && session.SPRING_SECURITY_LAST_EXCEPTION.message=='Bad credentials'}" style="color: red;">密码错误</div>-->
+        </form>
+    </div>
+</div>
+</body>
+</html>

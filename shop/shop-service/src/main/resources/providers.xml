@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!-- 服务提供方应用名，用于计算依赖关系 -->
+    <dubbo:application name="dubbo-shop-provider" owner="kangda"/>
+    <!--&lt;!&ndash; 定义 zookeeper 注册中心地址及协议 &ndash;&gt;-->
+    <dubbo:registry protocol="zookeeper" address="${zk.address}"
+                    client="zkclient"/>
+    <dubbo:protocol name="dubbo" port="-1"/>
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.kangda.api.IShopService" ref="shopService"
+                   timeout="10000"/>
+</beans>
