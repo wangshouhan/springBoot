@@ -17,7 +17,7 @@ public class Scheduler {
     @Scheduled(fixedRate = 20000)//参考corn表达式
     public void testTasks() {
         System.out.println("每20秒执行一次。开始执行mq中的消息");
-        sendService.findUserMQ("admin");
+        sendService.findUserMQ("wang");
         System.out.println("每20秒执行一次。结束。");
     }
 }
