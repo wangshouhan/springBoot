@@ -13,9 +13,11 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by shouhan on 2017/8/22.
@@ -62,9 +64,9 @@ public class UserController {
     public String home(Model model) {
         User auth = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //redis测试存入登录时的缓存
-        if (redisConfig.getMap("user") != null) {
-            redisConfig.remove("user");
-        }
+//        if (redisConfig.getMap("user") != null) {
+//            redisConfig.remove("user");
+//        }
         redisConfig.setMap("user", auth);
         User user = (User) redisConfig.getMap("user");
         model.addAttribute("auth", user);
@@ -84,8 +86,13 @@ public class UserController {
     }
 
     /**
-     * mq测试
+     * mybatis测试
      */
-
+    @RequestMapping("/mybatis")
+    @ResponseBody
+    @NoNeedLogin
+    public List<User> findUserList() {
+        return userService.findUserList();
+    }
 
 }

@@ -1,6 +1,5 @@
-package com.kangda.base.Exception;
+package com.kangda.base.exception;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 

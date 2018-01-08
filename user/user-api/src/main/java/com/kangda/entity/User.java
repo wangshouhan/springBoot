@@ -3,12 +3,14 @@ package com.kangda.entity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
  * Created by shouhan on 2017/7/5.
  */
-public class User implements UserDetails {
+public class User implements UserDetails,Serializable {
+    private static final long serialVersionUID = 8809101560720973267L;
     private Long id;
     private String userName;
     private String passWord;

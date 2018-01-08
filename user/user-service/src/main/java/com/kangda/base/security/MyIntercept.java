@@ -1,6 +1,6 @@
 package com.kangda.base.security;
 
-import com.kangda.base.Exception.UserNotLoginException;
+import com.kangda.base.exception.UserNotLoginException;
 import com.kangda.base.annotation.NoNeedLogin;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
