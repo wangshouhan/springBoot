@@ -2,6 +2,7 @@ package com.kangda.controller;
 
 import com.kangda.api.IShopService;
 import com.kangda.api.IUserService;
+import com.kangda.base.annotation.NoNeedLogin;
 import com.kangda.base.redis.RedisConfig;
 import com.kangda.entity.Shop;
 import com.kangda.entity.User;
@@ -42,6 +43,7 @@ public class UserController {
     /**
      * 登录(security)
      */
+    @NoNeedLogin
     @RequestMapping("/login")
     public String login(HttpServletRequest request) {
         //System.out.print("123456的加密密码："+passwordEncoder.encode("123456"));
@@ -55,6 +57,7 @@ public class UserController {
     /**
      * 跳转主页(security)
      */
+    @NoNeedLogin
     @RequestMapping("/home")
     public String home(Model model) {
         User auth = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
