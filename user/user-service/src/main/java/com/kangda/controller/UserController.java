@@ -64,12 +64,12 @@ public class UserController {
     public String home(Model model) {
         User auth = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //redis测试存入登录时的缓存
-//        if (redisConfig.getMap("user") != null) {
-//            redisConfig.remove("user");
-//        }
-//        redisConfig.setMap("user", auth);
-//        User user = (User) redisConfig.getMap("user");
-        model.addAttribute("auth", auth);
+        if (redisConfig.getMap("user") != null) {
+            redisConfig.remove("user");
+        }
+        redisConfig.setMap("user", auth);
+        User user = (User) redisConfig.getMap("user");
+        model.addAttribute("auth", user);
         return "home";
     }
 

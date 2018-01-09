@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
  * 全局异常拦截
  */
 @ControllerAdvice
-public class GlobalExceptionHandler extends BaseGlobalExceptionHandler{
+public class GlobalExceptionHandler extends BaseGlobalExceptionHandler {
 
     @Override
     protected void addServerExceptionLog(HttpServletRequest req, Exception e) {
-        System.out.println("数据库记录日志中。。。。。。");
+        System.out.println("项目出错了^-^");
+        System.out.println(e);
+        System.out.println("错误日志记录中。。。。。。");
     }
 }
