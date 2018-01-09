@@ -67,9 +67,9 @@ public class UserController {
 //        if (redisConfig.getMap("user") != null) {
 //            redisConfig.remove("user");
 //        }
-        redisConfig.setMap("user", auth);
-        User user = (User) redisConfig.getMap("user");
-        model.addAttribute("auth", user);
+//        redisConfig.setMap("user", auth);
+//        User user = (User) redisConfig.getMap("user");
+        model.addAttribute("auth", auth);
         return "home";
     }
 
