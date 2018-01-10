@@ -15,7 +15,8 @@ public class InterceptConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //新建拦截器MyIntercept(暂时定义拦截所有的路径"/**")
-        registry.addInterceptor(new MyIntercept()).addPathPatterns("/**");
+        registry.addInterceptor(new MyIntercept())
+                .excludePathPatterns("/images/**", "/js/**", "/css/**");
     }
 
 }

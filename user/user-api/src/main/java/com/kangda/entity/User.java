@@ -14,6 +14,7 @@ public class User implements UserDetails,Serializable {
     private Long id;
     private String userName;
     private String passWord;
+    private String color;
 
     public Long getId() {
         return id;
@@ -37,6 +38,14 @@ public class User implements UserDetails,Serializable {
 
     public void setPassWord(String passWord) {
         this.passWord = passWord;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     //Security中的实现

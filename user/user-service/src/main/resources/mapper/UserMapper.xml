@@ -5,4 +5,17 @@
       select * from user;
     </select>
 
+    <update id="updateColor" parameterType="String">
+      UPDATE USER
+      <set>
+        color = #{color}
+      </set>
+    </update>
+
+    <select id="findByName" parameterType="String" resultType="User">
+        select * from user
+        <where>
+            user_name = #{userName}
+        </where>
+    </select>
 </mapper>

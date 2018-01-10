@@ -7,6 +7,8 @@ import com.kangda.base.redis.RedisConfig;
 import com.kangda.entity.Shop;
 import com.kangda.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -70,12 +73,17 @@ public class UserController {
         redisConfig.setMap("user", auth);
         User user = (User) redisConfig.getMap("user");
         model.addAttribute("auth", user);
+        List<User> userList = userService.findUserList();
+        model.addAttribute("userList", userList);
         return "home";
+
+
     }
 
     /**
      * 退出页面(security)
      */
+    @NoNeedLogin
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -86,13 +94,24 @@ public class UserController {
     }
 
     /**
-     * mybatis测试
+     * 修改聊天字体颜色
      */
-    @RequestMapping("/mybatis")
-    @ResponseBody
     @NoNeedLogin
-    public List<User> findUserList() {
-        return userService.findUserList();
+    @RequestMapping("/update/color")
+    @ResponseBody
+    public String updateColor(String color) {
+        userService.updateColor(color);
+        return color;
     }
 
+    /**
+     * WebSocket接口
+     */
+    //当浏览器向服务端发送请求时，通过@MessageMapping映射的地址，类似于@RequestMapping
+    @MessageMapping(value = "/message/test")
+    //当服务端有消息时，会对订阅了@SendTo中的路径的浏览器发送消息
+    @SendTo(value = "/topic/response")
+    public String say(MessageAcceptor acceptor) {
+        return acceptor.getMsg();
+    }
 }

@@ -1,34 +1,156 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title sec:authentication="name"></title>
-    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}"/>
-    <style type="text/css">
-        body {
-            padding-top: 50px;
-        }
-
-        .starter-template {
-            padding: 40px 15px;
-            text-align: center;
-        }
-    </style>
+    <title>聊天页</title>
 </head>
 <body>
-<div class="container">
-    <div class="starter-template">
-        <div sec:authorize="hasRole('ROLE_USER')">
+<div id="centent" style="background: url(http://localhost:8081/image/bj1.jpg);width: 800px;height:880px;margin: 0 auto;border:solid #333333 2px">
+    <div id="top" style="width:100%;height: 80px;border-bottom:solid #333333 2px">
+        <div style="height: 20%;font-family: 'Comic Sans MS';font-size:8px;float: right;">
+            欢迎登录：<span th:text="${auth.username}" id="username"></span>！
+            <form action="/user/login" method="post" style="float:right">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="submit" value="退出聊天" id="disconnect"
+                        style="background-color: transparent;border:solid #333333 1px">
+                </input>
+            </form>
 
-            <p class="bg-info">无更多显示信息</p>
         </div>
-        <form action="/user/logout" method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <p>欢迎登录，<span th:text="${auth.username}"></span></p>
-            <input type="submit" class="btn btn-primary" value="注销"/>
-        </form>
+    </div>
+
+    <div style="float: left;width:70%;height: 800px;border-right:solid #333333 2px">
+        <div id="msg" style="background-color:white;width: 100%;height: 76%;word-wrap: break-word;overflow:auto;">
+
+        </div>
+        <div style="width: 100%;height: 4%;">
+            <span style="font-size: 6px;line-height: 32px">颜色值:</span>
+            <button id ="btn" style="width:20px;height:20px;border:0px; position: relative;top: 4px;"
+                    class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
+            </button>
+        </div>
+        <div style="width: 100%;height: 20%;">
+            <textarea cols="50" rows="10"
+                      style="width:99%;height:100px;border:solid #333333 1px;background-color: transparent;border-top:solid #333333 1px"
+                      id="name" placeholder="在这里输入内容..."></textarea>
+
+            <!--<input id="chosen-value" style="display: none" value="000000"/>-->
+            <button id="send" style="border:solid #333333 1px;float: right; margin-top: 10px;margin-right: 10px">发送
+            </button>
+            <span style="background:url(http://localhost:8081/image/color.png);width: 22px;height: 21px;display: none"><span id="c"
+                                                                                                 th:text="${auth.color}"></span></span>
+            <!--<span style="background:url(color.png);width: 22px;height: 21px;display: none"><span id="c"-->
+                                                                                                 <!--text="yellow"></span></span>-->
+        </div>
+    </div>
+
+    <div id="user" style="float: left;width:29%;height: 800px">
+        成员：<br/>
+        <hr color="#333333" size="2px"/>
+        <p th:each="user : ${userList}">
+            <a th:text="${user.username}">Onions</a>
+        <hr color="#333333" size="2px"/>
+        </p>
     </div>
 </div>
+
+<script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="http://localhost:8081/js/jscolor.js"></script>
+<script>
+    var row = 0;
+    window.onload = function () {
+        connect();
+    }
+
+    var stompClient = null;
+
+    function connect() {
+        $("#c").css("color", $("#c").text());
+        $("#name").css("color", $("#c").text());
+        $("#btn").css("background-color", $("#c").text());
+        var socket = new SockJS("/endpoint");//连接SockJS的endpoint名称为"/endpoint"
+        stompClient = Stomp.over(socket);//使用STOMP子协议的WebSocket客户端
+        stompClient.connect({}, function (frame) {//连接WebSocket服务端
+            stompClient.subscribe("/topic/response", function (msg) {//通过stopmClient.subscribe订阅"/topic/response"目标发送的消息，这个路径是在控制器的@SendTo中定义的
+                console.log(msg);
+                var msgDom = document.getElementById("msg");
+                var html = msgDom.innerHTML;
+                msgDom.innerHTML = html + msg.body;
+                row++;
+//                if (row > 10) {
+//                    var b = "";
+//                    var a = msgDom.innerHTML;
+//                    var strs = new Array(); //定义一数组
+//                    strs = a.split("&nbsp;"); //字符分割
+//                    for (var item in strs) {
+//                        if (item > 1) {
+//                            b = b + "&nbsp;" + strs[item];
+//                        }
+//                    }
+//                    msgDom.innerHTML = b;
+//                }
+                $('#msg').scrollTop($('#msg')[0].scrollHeight);
+            });
+
+        });
+
+
+    }
+
+    function send() {
+        var name = document.getElementById("name").value;
+        if (name == null || name == "") {
+            alert("请输入聊天语！")
+            return;
+        }
+        var color = $("#c").text();
+        //通过stompClient.send向"/message/test"目标发送消息，这个在控制器的@MessageMapping中定义的。
+
+
+        stompClient.send("/message/test", {}, JSON.stringify({
+            'msg': '&nbsp;' + '<span >' + $("#username").text() + '</span><span style="font-size: 8px;margin-left: 20px">'
+            + new Date().toLocaleString() + '</span><br/>'
+            + '<span  style = "color:' + color + ';margin-left: 20px;">' + name + '</span>' + '<hr style="border: 0.5 dotted ' + color + ';"/>'
+        }));
+        $("#name").val("");
+    }
+
+    //回车事件绑定
+    $('body').bind('keypress', function (event) {
+        if (event.keyCode == "13") {
+            event.preventDefault();
+            //回车执行查询
+            send();
+        }
+    });
+
+    document.getElementById("send").onclick = send;
+
+    function setTextColor(picker) {
+        $("#c").text('#' + picker.toString());
+        $("#name").css("color", $("#c").text());
+//        document.getElementsByTagName('body')[0].style.color = '#' + picker.toString()
+        $.ajax({
+            url: "/user/update/color",              //请求地址
+            type: "GET",                       //请求方式
+            data: { color: "#"+picker.toString()},        //请求参数
+            dataType: "json",
+            success: function (data) {
+                // 此处放成功后执行的代码
+                console.info(" "+data)
+                if(data.flag == true){
+                    console.info(data);
+                }else{
+                    alert("修改失败！")
+                }
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+            }
+        });
+    }
+</script>
 </body>
 </html>

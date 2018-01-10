@@ -11,4 +11,8 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     List<User> findUserList();
+
+    void updateColor(String color);
+
+    User findByName(String userName);
 }

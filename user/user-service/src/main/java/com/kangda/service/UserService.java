@@ -1,7 +1,6 @@
 package com.kangda.service;
 
 import com.kangda.api.IUserService;
-import com.kangda.dao.UserDao;
 import com.kangda.entity.User;
 import com.kangda.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +15,20 @@ import java.util.List;
 public class UserService implements IUserService {
 
     @Autowired
-    private UserDao userDao;
-    @Autowired
     private UserMapper userMapper;
 
     @Override
-    public User login(String userName, String passWord) {
-        User user = userDao.login(userName, passWord);
-        return user;
+    public User findByName(String userName) {
+        return userMapper.findByName(userName);
     }
 
     @Override
-    public User findByName(String userName) {
-        return userDao.findByName(userName);
+    public List<User> findUserList() {
+        return userMapper.findUserList();
     }
 
-    public List<User> findUserList(){
-        return userMapper.findUserList();
+    @Override
+    public void updateColor(String color) {
+        userMapper.updateColor(color);
     }
 }

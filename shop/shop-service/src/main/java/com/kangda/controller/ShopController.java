@@ -48,16 +48,6 @@ public class ShopController {
     }
 
     /**
-     * 远程调用user模块的接口
-     *
-     * @return
-     */
-    @RequestMapping("test")
-    public User test() {
-        return userService.login("admin", "123456");
-    }
-
-    /**
      * rabbitMQ消息队列远程调用测试
      */
     @RequestMapping("send")
