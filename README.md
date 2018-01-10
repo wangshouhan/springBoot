@@ -18,7 +18,7 @@ springBoot学习框架。。。。
 
 9.scheduler定时器
 
-10.自定义拦截器token拦截（与Security重复，但是学习就好）
+10.自定义拦截器token拦截（与Security重复，学习就好）
 
 11.自定义注解
 
