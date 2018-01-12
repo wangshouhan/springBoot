@@ -23,12 +23,18 @@ public class ApiAspect {
     private static final Logger logger = LoggerFactory.getLogger(ApiAspect.class);
     ThreadLocal<Long> startTime = new ThreadLocal<Long>();
 
-    @Pointcut("execution(public * com.kangda.controller..*.*(..))")  // 定义切点表达式
+    /**
+     * 定义切点表达式
+     */
+    @Pointcut("execution(public * com.kangda.controller..*.*(..))")
     public void controllerPoint() {
     }
 
-    @Pointcut("@annotation(com.kangda.base.annotation.AspectIntercept)")// 定义注解类型的切点，只要方法上有该注解，都会匹配
-    public void annotationPoint(){
+    /**
+     * 定义注解类型的切点，只要方法上有该注解，都会匹配
+     */
+    @Pointcut("@annotation(com.kangda.base.annotation.AspectIntercept)")
+    public void annotationPoint() {
     }
 
     /**
@@ -49,13 +55,16 @@ public class ApiAspect {
         startTime.set(System.currentTimeMillis());
     }
 
+    /**
+     * 方法环绕
+     */
     @Around("controllerPoint() && args(arg)")// 需要匹配切点表达式，同时需要匹配参数
     public String around(ProceedingJoinPoint pjp, String arg) {
-        System.out.println("name:"+arg);
+        System.out.println("name:" + arg);
         System.out.println("方法环绕start....around.");
         String result = null;
         try {
-            result = (String) pjp.proceed()+" aop String";
+            result = (String) pjp.proceed() + " aop String";
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -63,12 +72,18 @@ public class ApiAspect {
         return result;
     }
 
+    /**
+     * 方法之后执行
+     */
     @After("annotationPoint()")
     public void after() {
         System.out.println("方法之后执行....after.");
     }
 
-    @AfterReturning(pointcut="annotationPoint()", returning="rst")
+    /**
+     * 方法执行完执行
+     */
+    @AfterReturning(pointcut = "annotationPoint()", returning = "rst")
     public void afterReturning(JoinPoint joinPoint, Object rst) {
         System.out.println("方法执行完执行.....afterReturning");
         logger.info("耗时（毫秒） : " + (System.currentTimeMillis() - startTime.get()));
@@ -76,6 +91,9 @@ public class ApiAspect {
         logger.info("====================================================================>");
     }
 
+    /**
+     * 异常出现之后
+     */
     @AfterThrowing("annotationPoint()")
     public void afterThrowing() {
         System.out.println("异常出现之后.....afterThrowing");
