@@ -8,7 +8,7 @@ springBoot学习框架。。。。
 
 4.Spring Security安全框架
 
-5.thymeleaf前端模板
+5.thymeleaf前端模板配置
 
 6.rabbitMq消息队列
 
@@ -27,3 +27,6 @@ springBoot学习框架。。。。
 13.自定义banner
 
 14.环境切换
+
+
+注:默认登陆账号和密码  admin 123456
