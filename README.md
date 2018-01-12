@@ -1,8 +1,8 @@
 springBoot学习框架。。。。
 
-1.dubbo+zk的整合
+1.springBoot+dubbo+zk的整合
 
-2.mysql数据库
+2.mysql数据库整合
 
 3.redis缓存
 
