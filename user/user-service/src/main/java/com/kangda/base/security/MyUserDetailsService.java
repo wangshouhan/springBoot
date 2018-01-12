@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by shouhan on 2017/8/23.
+ * <p>
+ * 重写loadUserByUsername方法与本地数据库关联
  */
 @Component
 public class MyUserDetailsService implements UserDetailsService {

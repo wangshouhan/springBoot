@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * Created by shouhan on 2017/8/23.
+ * <p>
+ * security配置文件
  */
 @Service
 @Configuration
