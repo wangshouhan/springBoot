@@ -1,10 +1,12 @@
 package com.kangda.api;
 
-import com.kangda.entity.Shop;
+import java.util.Map;
 
 /**
  * Created by shouhan on 2017/8/22.
+ * <p>
+ * 商品详情api
  */
 public interface IShopService {
-    Shop findById(Integer id);
+    Map<String, Object> findByUserId();
 }

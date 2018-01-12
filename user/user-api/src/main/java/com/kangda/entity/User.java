@@ -8,12 +8,26 @@ import java.util.Collection;
 
 /**
  * Created by shouhan on 2017/7/5.
+ * <p>
+ * 用户实体
  */
-public class User implements UserDetails,Serializable {
+public class User implements UserDetails, Serializable {
     private static final long serialVersionUID = 8809101560720973267L;
+    /**
+     * 用户id
+     */
     private Long id;
+    /**
+     * 用户名
+     */
     private String userName;
+    /**
+     * 用户密码（加密字符串）
+     */
     private String passWord;
+    /**
+     * 用户聊天字体颜色
+     */
     private String color;
 
     public Long getId() {

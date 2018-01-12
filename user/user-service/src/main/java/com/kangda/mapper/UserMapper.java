@@ -15,4 +15,6 @@ public interface UserMapper {
     void updateColor(String color);
 
     User findByName(String userName);
+
+    User findById(Integer id);
 }

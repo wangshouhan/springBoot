@@ -31,4 +31,9 @@ public class UserService implements IUserService {
     public void updateColor(String color) {
         userMapper.updateColor(color);
     }
+
+    @Override
+    public User findById(Integer id) {
+        return userMapper.findById(id);
+    }
 }

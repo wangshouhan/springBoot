@@ -2,16 +2,16 @@ package com.kangda.controller;
 
 import com.kangda.api.ISendService;
 import com.kangda.api.IShopService;
-import com.kangda.api.IUserService;
-import com.kangda.base.redis.RedisConfig;
-import com.kangda.entity.Shop;
-import com.kangda.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * Created by shouhan on 2017/8/22.
+ * <p>
+ * 商品详情
  */
 @RestController
 @RequestMapping("/shop")
@@ -20,31 +20,14 @@ public class ShopController {
     @Autowired
     private IShopService shopService;
     @Autowired
-    private IUserService userService;
-    @Autowired
-    private RedisConfig redisConfig;
-    @Autowired
     private ISendService sendService;
 
     /**
      * 对外暴露的接口shop详情
-     *
-     * @param id
-     * @return
      */
-    @RequestMapping("detail")
-    public Shop detail(Integer id) {
-        return shopService.findById(id);
-    }
-
-    /**
-     * redis获取User模块登录时保存的用户信息
-     *
-     * @return
-     */
-    @RequestMapping("redis")
-    public User redis() {
-        return (User) redisConfig.getMap("user");
+    @RequestMapping("info")
+    public Map<String, Object> detail() {
+        return shopService.findByUserId();
     }
 
     /**

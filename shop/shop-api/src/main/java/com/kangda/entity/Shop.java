@@ -5,12 +5,18 @@ import java.util.Date;
 
 /**
  * Created by shouhan on 2017/8/22.
+ * <p>
+ * 商品详情实体
  */
-public class Shop implements Serializable{
+public class Shop implements Serializable {
     /**
      * 主键id
      */
     private Long id;
+    /**
+     * 发布人Id
+     */
+    private Integer userId;
     /**
      * 商品名称
      */
@@ -30,6 +36,14 @@ public class Shop implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getName() {

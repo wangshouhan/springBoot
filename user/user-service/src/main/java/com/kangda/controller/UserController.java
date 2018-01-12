@@ -21,9 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by shouhan on 2017/8/22.
+ * <p>
+ * 用户
  */
 @Controller
 @RequestMapping("/user")
@@ -41,8 +44,8 @@ public class UserController {
      * @return
      */
     @RequestMapping("test")
-    public Shop test() {
-        return shopService.findById(1);
+    public Map<String, Object> test() {
+        return shopService.findByUserId();
     }
 
     /**
@@ -67,12 +70,8 @@ public class UserController {
     public String home(Model model) {
         User auth = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //redis测试存入登录时的缓存
-        if (redisConfig.getMap("user") != null) {
-            redisConfig.remove("user");
-        }
-        redisConfig.setMap("user", auth);
-        User user = (User) redisConfig.getMap("user");
-        model.addAttribute("auth", user);
+        redisConfig.setMap("userId", auth.getId());
+        model.addAttribute("auth", auth);
         List<User> userList = userService.findUserList();
         model.addAttribute("userList", userList);
         return "home";
