@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by shouhan on 2017/8/24.
+ * <p>
+ * rabbitMq配置文件（绑定）
  */
 @Configuration
 public class rabbitConfig {

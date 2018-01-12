@@ -1,4 +1,4 @@
-package com.kangda.controller;
+package com.kangda.base.socket;
 
 import java.io.Serializable;
 

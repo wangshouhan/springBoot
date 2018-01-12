@@ -5,7 +5,7 @@ import com.kangda.api.IUserService;
 import com.kangda.base.annotation.AspectIntercept;
 import com.kangda.base.annotation.NoNeedLogin;
 import com.kangda.base.redis.RedisConfig;
-import com.kangda.entity.Shop;
+import com.kangda.base.socket.MessageAcceptor;
 import com.kangda.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by shouhan on 2017/8/24.
+ * <p>
+ * 定时器测试
  */
 @Component
 public class Scheduler {

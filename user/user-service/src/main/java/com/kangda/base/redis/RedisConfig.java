@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by shouhan on 2017/8/23.
+ * <p>
+ * redis中redisTemplate模板封装
  */
 @Repository
 public class RedisConfig {
