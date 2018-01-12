@@ -39,9 +39,7 @@ public class UserController {
     private IUserService userService;
 
     /**
-     * 测试dubbo的远程调用Shop模块的接口
-     *
-     * @return
+     * 测试dubbo的远程调用Shop模块的接口(aop切面测试接口)
      */
     @RequestMapping("test")
     @NoNeedLogin
