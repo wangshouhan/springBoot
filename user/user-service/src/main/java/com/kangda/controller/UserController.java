@@ -2,6 +2,7 @@ package com.kangda.controller;
 
 import com.kangda.api.IShopService;
 import com.kangda.api.IUserService;
+import com.kangda.base.annotation.AspectIntercept;
 import com.kangda.base.annotation.NoNeedLogin;
 import com.kangda.base.redis.RedisConfig;
 import com.kangda.entity.Shop;
@@ -44,6 +45,9 @@ public class UserController {
      * @return
      */
     @RequestMapping("test")
+    @NoNeedLogin
+    @AspectIntercept
+    @ResponseBody
     public Map<String, Object> test() {
         return shopService.findByUserId();
     }
