@@ -1,6 +1,8 @@
 package com.kangda.api;
 
+import com.kangda.entity.Page;
 import com.kangda.entity.User;
+
 
 import java.util.List;
 
@@ -17,4 +19,6 @@ public interface IUserService {
     void updateColor(String color);
 
     User findById(Integer id);
+
+    Page<User> findPage(Page<User> user);
 }

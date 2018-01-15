@@ -6,6 +6,7 @@ import com.kangda.base.annotation.AspectIntercept;
 import com.kangda.base.annotation.NoNeedLogin;
 import com.kangda.base.redis.RedisConfig;
 import com.kangda.base.socket.MessageAcceptor;
+import com.kangda.entity.Page;
 import com.kangda.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -39,17 +40,6 @@ public class UserController {
     private IUserService userService;
 
     /**
-     * 测试dubbo的远程调用Shop模块的接口(aop切面测试接口)
-     */
-    @RequestMapping("test")
-    @NoNeedLogin
-    @AspectIntercept
-    @ResponseBody
-    public Map<String, Object> test() {
-        return shopService.findByUserId();
-    }
-
-    /**
      * 登录(security)
      */
     @NoNeedLogin
@@ -76,8 +66,6 @@ public class UserController {
         List<User> userList = userService.findUserList();
         model.addAttribute("userList", userList);
         return "home";
-
-
     }
 
     /**
@@ -94,6 +82,17 @@ public class UserController {
     }
 
     /**
+     * WebSocket接口
+     */
+    //当浏览器向服务端发送请求时，通过@MessageMapping映射的地址，类似于@RequestMapping
+    @MessageMapping(value = "/message/test")
+    //当服务端有消息时，会对订阅了@SendTo中的路径的浏览器发送消息
+    @SendTo(value = "/topic/response")
+    public String say(MessageAcceptor acceptor) {
+        return acceptor.getMsg();
+    }
+
+    /**
      * 修改聊天字体颜色
      */
     @NoNeedLogin
@@ -105,13 +104,23 @@ public class UserController {
     }
 
     /**
-     * WebSocket接口
+     * 测试dubbo的远程调用Shop模块的接口(aop切面测试接口)
      */
-    //当浏览器向服务端发送请求时，通过@MessageMapping映射的地址，类似于@RequestMapping
-    @MessageMapping(value = "/message/test")
-    //当服务端有消息时，会对订阅了@SendTo中的路径的浏览器发送消息
-    @SendTo(value = "/topic/response")
-    public String say(MessageAcceptor acceptor) {
-        return acceptor.getMsg();
+    @RequestMapping("test")
+    @NoNeedLogin
+    @AspectIntercept
+    @ResponseBody
+    public Map<String, Object> test() {
+        return shopService.findByUserId();
+    }
+
+    /**
+     * 分页查询user表
+     */
+    @RequestMapping("page")
+    @NoNeedLogin
+    @ResponseBody
+    public Page<User> findPage(Page<User> page) {
+        return userService.findPage(page);
     }
 }

@@ -1,6 +1,8 @@
 package com.kangda.service;
 
+import com.github.pagehelper.PageHelper;
 import com.kangda.api.IUserService;
+import com.kangda.entity.Page;
 import com.kangda.entity.User;
 import com.kangda.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +37,18 @@ public class UserService implements IUserService {
     @Override
     public User findById(Integer id) {
         return userMapper.findById(id);
+    }
+
+    @Override
+    public Page<User> findPage(Page<User> page) {
+        com.github.pagehelper.Page pageHelper = PageHelper.startPage(page.getPageNo(),page.getPageSize());
+        pageDate(page,userMapper.findUserList(),pageHelper);
+        return page;
+    }
+
+    private void pageDate(Page<User> page, List<User> list, com.github.pagehelper.Page pageHelper) {
+        page.setTotalCount(pageHelper.getTotal());
+        page.setTotalNo(pageHelper.getPageNum());
+        page.setResult(list);
     }
 }
