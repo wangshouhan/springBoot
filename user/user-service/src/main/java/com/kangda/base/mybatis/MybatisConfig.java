@@ -19,6 +19,8 @@ import java.util.Properties;
 
 /**
  * Created by: shouhan  on 14:54 2018/1/15.
+ * <p>
+ * mybatis配置文件 包括整合springBoot,分页插件等
  */
 @Configuration
 @EnableTransactionManagement
@@ -31,6 +33,7 @@ public class MybatisConfig implements TransactionManagementConfigurer {
     public SqlSessionFactory sqlSessionFactoryBean() {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
+        //扫描实体
         bean.setTypeAliasesPackage("com.kangda.entity");
 
         // 支持下划线到驼峰
@@ -55,6 +58,7 @@ public class MybatisConfig implements TransactionManagementConfigurer {
         //添加XML目录
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
+            //对应的mapper中的xml文件
             bean.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
             bean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
             return bean.getObject();

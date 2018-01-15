@@ -41,7 +41,7 @@ public class UserService implements IUserService {
 
     @Override
     public Page<User> findPage(Page<User> page) {
-        com.github.pagehelper.Page pageHelper = PageHelper.startPage(page.getPageNo(),page.getPageSize());
+        com.github.pagehelper.Page<?> pageHelper = PageHelper.startPage(page.getPageNo(),page.getPageSize());
         pageDate(page,userMapper.findUserList(),pageHelper);
         return page;
     }
