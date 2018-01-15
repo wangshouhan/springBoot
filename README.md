@@ -30,5 +30,7 @@ springBoot学习框架。。。。
 
 15.aop实现拦截
 
+16.分页查询pageHelper插件
+
 
 注:默认登陆账号和密码  admin 123456

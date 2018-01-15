@@ -11,12 +11,33 @@ import java.util.Map;
  * 分页封装
  */
 public class Page<T> implements Serializable {
+    /**
+     * 当前页
+     */
     private Integer pageNo = 1;
+    /**
+     * 每页的行数
+     */
     private Integer pageSize = 10;
+    /**
+     * 总共的页数
+     */
     private Integer totalNo;
+    /**
+     * 总数据的条数
+     */
     private Long totalCount;
+    /**
+     * 返回数据
+     */
     private List<T> result = Collections.emptyList();
+    /**
+     * 排序的字段
+     */
     private String orderBy;
+    /**
+     * 其他查询条件 格式：filter[name]
+     */
     private Map<String, Object> filter;
 
     public Integer getPageNo() {
