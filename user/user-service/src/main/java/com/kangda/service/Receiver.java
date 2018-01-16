@@ -1,8 +1,7 @@
 package com.kangda.service;
 
-import com.kangda.api.IShopService;
 import com.kangda.api.IUserService;
-import com.kangda.entity.Shop;
+import com.kangda.base.socket.MessageAcceptor;
 import com.kangda.entity.User;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +18,13 @@ public class Receiver {
     /**
      * 接收mq传过来的消息
      *
-     * @param msg
+     * @param messageAdapter
      * @return
      */
-    @RabbitListener(queues = "say")
-    public String processMessage1(String msg) {
-        System.out.println(Thread.currentThread().getName() + " 接收到来自say队列的消息：" + msg);
-        return msg.toUpperCase();
+    @RabbitListener(queues = "sendMessage")
+    public String sendMessage(MessageAcceptor messageAdapter) {
+        System.out.println(Thread.currentThread().getName() + " 接收到来自sendMessage队列的消息：" + messageAdapter.toString());
+        return messageAdapter.getMsg();
     }
 
     /**
@@ -35,7 +34,7 @@ public class Receiver {
      * @return
      */
     @RabbitListener(queues = "findUser")
-    public String processMessage2(String msg) {
+    public String findUser(String msg) {
         System.out.println(Thread.currentThread().getName() + " 接收到来自findShopMQ队列的消息：" + msg);
         User user = userService.findByName(msg);
         System.out.println(user.getId());

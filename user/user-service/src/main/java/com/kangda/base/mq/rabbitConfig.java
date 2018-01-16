@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Configuration;
 public class rabbitConfig {
     //声明队列
     @Bean
-    public Queue queue1() {
-        return new Queue("say", true); // true表示持久化该队列
+    public Queue sendMessage() {
+        return new Queue("sendMessage", true); // true表示持久化该队列
     }
 
     @Bean
@@ -34,7 +34,7 @@ public class rabbitConfig {
     //绑定
     @Bean
     public Binding binding1() {
-        return BindingBuilder.bind(queue1()).to(topicExchange()).with("key1");
+        return BindingBuilder.bind(sendMessage()).to(topicExchange()).with("sendMessage");
     }
 
     //绑定

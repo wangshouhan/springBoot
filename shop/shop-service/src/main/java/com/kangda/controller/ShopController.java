@@ -19,8 +19,6 @@ public class ShopController {
 
     @Autowired
     private IShopService shopService;
-    @Autowired
-    private ISendService sendService;
 
     /**
      * 对外暴露的接口shop详情
@@ -29,13 +27,4 @@ public class ShopController {
     public Map<String, Object> detail() {
         return shopService.findByUserId();
     }
-
-    /**
-     * rabbitMQ消息队列远程调用测试
-     */
-    @RequestMapping("send")
-    public void send() {
-        sendService.send("Hello RabbitMQ...");
-    }
-
 }

@@ -8,6 +8,7 @@ import com.kangda.base.redis.RedisConfig;
 import com.kangda.base.socket.MessageAcceptor;
 import com.kangda.entity.Page;
 import com.kangda.entity.User;
+import com.kangda.service.SendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -38,6 +39,8 @@ public class UserController {
     private RedisConfig redisConfig;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private SendService sendService;
 
     /**
      * 登录(security)
@@ -88,8 +91,9 @@ public class UserController {
     @MessageMapping(value = "/message/test")
     //当服务端有消息时，会对订阅了@SendTo中的路径的浏览器发送消息
     @SendTo(value = "/topic/response")
-    public String say(MessageAcceptor acceptor) {
-        return acceptor.getMsg();
+    public String sendMessage(MessageAcceptor acceptor) {
+        //将聊天信息打入mq中方便后面的操作
+        return sendService.sendMessage(acceptor);
     }
 
     /**

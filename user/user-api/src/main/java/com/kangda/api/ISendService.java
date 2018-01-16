@@ -7,10 +7,6 @@ package com.kangda.api;
 public interface ISendService {
     /**
      * 发送消息，不需要实现任何接口，供外部调用。
-     *
-     * @param msg
      */
-    void send(String msg);
-
     void findUserMQ(String msg);
 }
