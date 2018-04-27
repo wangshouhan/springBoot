@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,13 +48,13 @@ public class UserController {
      */
     @NoNeedLogin
     @RequestMapping("/login")
-    public String login(HttpServletRequest request) {
+    public ModelAndView login(HttpServletRequest request) {
         //System.out.print("123456的加密密码："+passwordEncoder.encode("123456"));
         Object savedRequestObject = request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
         if (savedRequestObject != null) {
             request.getSession().removeAttribute("SPRING_SECURITY_SAVED_REQUEST");
         }
-        return "/login";
+        return new ModelAndView("login");
     }
 
     /**
@@ -61,14 +62,14 @@ public class UserController {
      */
     @NoNeedLogin
     @RequestMapping("/home")
-    public String home(Model model) {
+    public ModelAndView home(Model model) {
         User auth = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //redis测试存入登录时的缓存
         redisConfig.setMap("userId", auth.getId());
         model.addAttribute("auth", auth);
         List<User> userList = userService.findUserList();
         model.addAttribute("userList", userList);
-        return "home";
+        return new ModelAndView("home");
     }
 
     /**
@@ -76,12 +77,12 @@ public class UserController {
      */
     @NoNeedLogin
     @RequestMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "login";
+        return new ModelAndView("login");
     }
 
     /**
