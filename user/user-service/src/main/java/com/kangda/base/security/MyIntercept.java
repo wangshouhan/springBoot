@@ -39,7 +39,10 @@ public class MyIntercept implements HandlerInterceptor {
             //如果没有不需要判断登录的注解判断其登录的token
             String token = request.getParameter("token");
             if (token == null || !token.equals("123456")){
-                throw new UserNotLoginException();
+
+                System.out.println("用户未登录。");
+                //todo 寿汉 这里不支持静态文件的访问待优化
+                //throw new UserNotLoginException();
             }
         }
         return true;

@@ -5,7 +5,7 @@
     <title>聊天页</title>
 </head>
 <body>
-<div id="centent" style="background: url(http://localhost:8081/image/bj1.jpg);width: 800px;height:880px;margin: 0 auto;border:solid #333333 2px">
+<div id="centent" th:style="'background:url(' + @{../image/bj1.jpg} + ');width: 800px;height:880px;margin: 0 auto;border:solid #333333 2px'">
     <div id="top" style="width:100%;height: 80px;border-bottom:solid #333333 2px">
         <div style="height: 20%;font-family: 'Comic Sans MS';font-size:8px;float: right;">
             欢迎登录：<span th:text="${auth.username}" id="username"></span>！
@@ -57,7 +57,7 @@
 <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="http://localhost:8081/js/jscolor.js"></script>
+<script type="text/javascript" th:src="@{../js/jscolor.js}"></script>
 <script>
     var row = 0;
     window.onload = function () {
